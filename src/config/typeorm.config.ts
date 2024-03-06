@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
 
-export const ormConfig: TypeOrmModuleOptions = {
+export const TypeOrmOptions: TypeOrmModuleOptions = {
     type: 'mysql',
     host: 'localHost',
     port: 3306,
