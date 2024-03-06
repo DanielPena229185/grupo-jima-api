@@ -1,7 +1,7 @@
 // TODO eliminar cuando se tenga la entidad de Pedido
 export class Pedido {
   constructor(
-    public id: number,
+    public id: string,
     public detalles: Producto[],
     public fecha: Date,
     public numRecorrido: number,
