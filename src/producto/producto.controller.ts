@@ -10,7 +10,7 @@ export class ProductoController {
     ){}
 
     //producto/tienda/1
-    @Get('tienda/:id')
+    @Get('tienda/:tiendaId')
     getProductosByTiendaId(@Param() tiendaId: ObtenerProductosByTiendaId): Promise<Producto[]> {
         return this.productoService.getProductosByTiendaId(tiendaId);
     }
