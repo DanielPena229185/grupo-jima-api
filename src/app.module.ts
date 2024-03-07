@@ -6,17 +6,22 @@ import { TypeOrmOptions } from './config/typeorm.config';
 import { ConfigModule } from '@nestjs/config';
 import { PedidoController } from './pedido/pedido.controller';
 import { PedidoService } from './pedido/pedido.service';
+import { ProductoController } from './producto/producto.controller';
+import { ProductoService } from './producto/producto.service';
 
 @Module({
   imports: [
+
+  ],
+})
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(TypeOrmOptions),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
   ],
-})
-@Module({
-  imports: [TypeOrmModule.forRoot(TypeOrmOptions)],
-  controllers: [AppController, PedidoController],
+  controllers: [AppController, PedidoController, ProductoController, ProductoService],
   providers: [AppService, PedidoService],
 })
-export class AppModule {}
+export class AppModule { }
