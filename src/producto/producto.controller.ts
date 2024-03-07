@@ -9,16 +9,8 @@ export class ProductoController {
         private readonly productoService: ProductoService
     ){}
 
-    //producto/tienda/1
     @Get('tienda/:tiendaId')
-    getProductosByTiendaId(@Param() tiendaId: ObtenerProductosByTiendaId): Promise<Producto[]> {
+    async getProductosByTiendaId(@Param() tiendaId: ObtenerProductosByTiendaId): Promise<Producto[]> {
         return this.productoService.getProductosByTiendaId(tiendaId);
-    }
-
-
-    //pedido/2
-    @Get(':id')
-    getProductoByProductoId(){
-        
     }
 }

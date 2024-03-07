@@ -11,14 +11,17 @@ import { ProductoService } from './producto/producto.service';
 
 @Module({
   imports: [
+
+  ],
+})
+@Module({
+  imports: [
+    TypeOrmModule.forRoot(TypeOrmOptions),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
   ],
-})
-@Module({
-  imports: [TypeOrmModule.forRoot(TypeOrmOptions)],
   controllers: [AppController, PedidoController, ProductoController, ProductoService],
   providers: [AppService, PedidoService],
 })
-export class AppModule {}
+export class AppModule { }
