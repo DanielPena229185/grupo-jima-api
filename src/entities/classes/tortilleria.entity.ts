@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable} from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable, ManyToMany} from "typeorm"
 import { Pedido } from './pedido.entity'
-import { EmpleadoTortilleria } from "./empleado-tortilleria.entity"
+import { Empleado } from "./empleado.entity"
 
 @Entity()
 export class Tortilleria {
@@ -19,6 +19,6 @@ export class Tortilleria {
     @OneToMany(() => Pedido, pedido => pedido.tortilleria)
     pedidos: Pedido[];
 
-    @OneToMany(() => EmpleadoTortilleria, empleados => empleados.tortilleria)
-    empleados: EmpleadoTortilleria[];
+    @ManyToMany(() => Empleado, empleados => empleados.tortillerias)
+    empleados: Empleado[];
 }

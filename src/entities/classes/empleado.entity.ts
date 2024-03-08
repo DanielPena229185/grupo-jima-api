@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany} from "typeorm"
-import { EmpleadoTortilleria } from "./empleado-tortilleria.entity";
+import { Tortilleria } from "./tortilleria.entity";
 
 @Entity()
 export class Empleado {
@@ -15,6 +15,6 @@ export class Empleado {
     @Column()
     nombre: string
 
-    @OneToMany(() => EmpleadoTortilleria, empleados => empleados.empleado)
-    tortillerias: EmpleadoTortilleria[];
+    @ManyToMany(() => Tortilleria, tortilleria => tortilleria.empleados)
+    tortillerias: Tortilleria[];
 }

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn, BeforeInsert} from "typeorm";
 import { Paquete } from './paquete.entity';
 import { Tienda } from './tienda.entity';
 import { Repartidor } from "./repartidor.entity";
