@@ -8,11 +8,11 @@ import { PedidoController } from './pedido/pedido.controller';
 import { PedidoService } from './pedido/pedido.service';
 import { ProductoController } from './producto/producto.controller';
 import { ProductoService } from './producto/producto.service';
+import { EntitiesModule } from './entities/entities.module';
 
 @Module({
   imports: [
-
-  ],
+  EntitiesModule],
 })
 @Module({
   imports: [

@@ -3,6 +3,7 @@ import { Paquete } from './paquete.entity';
 import { Tienda } from './tienda.entity';
 import { Repartidor } from "./repartidor.entity";
 import { Tortilleria } from "./tortilleria.entity";
+import { PedidoStatus } from "../enums/pedido-status-enum";
 
 @Entity()
 export class Pedido {
@@ -18,8 +19,13 @@ export class Pedido {
     @Column()
     detalles: string
 
-    @Column()
-    estado: string
+    @Column({
+        type: "enum",
+        nullable: false,
+        enum: PedidoStatus,
+        default: PedidoStatus.PENDIENTE
+    })
+    estado: PedidoStatus
 
     @Column({type:'datetime', default: () => 'CURRENT_TIMESTAMP'})
     fechaHoraCreacion: Date
