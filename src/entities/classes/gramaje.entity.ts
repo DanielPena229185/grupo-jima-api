@@ -1,14 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm"
 import { Producto } from './producto.entity';
 
-@Entity()
+@Entity({ name: "gramajes", schema: "public" })
 export class Gramaje {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type:'decimal'})
+    @Column({type:'float'})
     gramaje: number
-
-    @OneToMany(() => Producto, producto => producto.gramaje)
-    productos: Producto[];
 }

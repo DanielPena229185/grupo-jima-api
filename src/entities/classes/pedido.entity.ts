@@ -1,11 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn, BeforeInsert} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn, BeforeInsert, CreateDateColumn, UpdateDateColumn, BeforeUpdate} from "typeorm";
 import { Paquete } from './paquete.entity';
 import { Tienda } from './tienda.entity';
 import { Repartidor } from "./repartidor.entity";
 import { Tortilleria } from "./tortilleria.entity";
 import { PedidoStatus } from "../enums/pedido-status-enum";
 
-@Entity()
+@Entity({ name: "pedidos", schema: "public" })
 export class Pedido {
     @PrimaryGeneratedColumn()
     id: number
@@ -27,19 +27,25 @@ export class Pedido {
     })
     estado: PedidoStatus
 
-    @Column({type:'datetime', default: () => 'CURRENT_TIMESTAMP'})
-    fechaHoraCreacion: Date
+    @CreateDateColumn({ 
+        name: "created_at", 
+        type: "timestamp", 
+        nullable: false 
+      })    fechaHoraCreacion: Date
 
-    @Column({type:'datetime'})
-    fechaHoraActualizado: Date
+      @UpdateDateColumn({ 
+        name: "updated_at", 
+        type: "timestamp", 
+        nullable: false 
+      })    fechaHoraActualizado: Date
 
-    @Column({type:'decimal'})
+    @Column({type:'float'})
     total: number
 
     @OneToMany(() => Paquete, paquete => paquete.pedido, { cascade: ["remove"] })
     paquetes: Paquete[];
 
-    @ManyToOne(() => Repartidor, repartidor => repartidor.pedidos)
+    @ManyToOne(() => Repartidor)
     @JoinColumn({name: 'repartidor_id'})
     repartidor: Repartidor;
 
@@ -47,8 +53,26 @@ export class Pedido {
     @JoinColumn({name: 'tienda_id'})
     tienda: Tienda;
 
-    @ManyToOne(() => Tortilleria, tortilleria => tortilleria.pedidos)
-    @JoinColumn({name: 'pedidos_id'})
+    @ManyToOne(() => Tortilleria)
+    @JoinColumn({name: 'tortilleria_id'})
     tortilleria: Tortilleria;
+
+    @BeforeInsert()
+    private beforeInsert(): void{
+      this.fechaHoraCreacion = new Date();
+      this.fechaHoraActualizado = this.fechaHoraCreacion;
+      this.calculateTotal();
+    }
+  
+    @BeforeUpdate()
+    private beforeUpdate(): void{
+      this.fechaHoraActualizado = new Date();
+    }
+    
+    private calculateTotal(){
+        for(let paquete of this.paquetes){
+            this.total+=(paquete.cantidad*paquete.producto.precio);
+        }
+    }
 
 }

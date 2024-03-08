@@ -1,20 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany} from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany, TableInheritance} from "typeorm"
 import { Tortilleria } from "./tortilleria.entity";
+import { Usuario } from "./usuario-entity";
 
-@Entity()
-export class Empleado {
-    @PrimaryGeneratedColumn()
-    id: number
+@Entity({ name: "empleados", schema: "public" })
+export class Empleado extends Usuario {
 
-    @Column({unique: true})
-    codigoEmpleado: number
-
-    @Column({unique: true})
-    telefono: number
-
-    @Column()
-    nombre: string
-
-    @ManyToMany(() => Tortilleria, tortilleria => tortilleria.empleados)
+    @ManyToMany(() => Tortilleria, (tortilleria)=>tortilleria.empleados)
+    @JoinTable()
     tortillerias: Tortilleria[];
 }

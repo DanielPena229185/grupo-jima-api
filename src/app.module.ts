@@ -12,16 +12,13 @@ import { EntitiesModule } from './entities/entities.module';
 
 @Module({
   imports: [
-  EntitiesModule],
-})
-@Module({
-  imports: [
     TypeOrmModule.forRoot(TypeOrmOptions),
+    EntitiesModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, PedidoController, ProductoController, ProductoService],
-  providers: [AppService, PedidoService],
+  controllers: [AppController, PedidoController, ProductoController],
+  providers: [AppService, PedidoService,ProductoService],
 })
 export class AppModule { }

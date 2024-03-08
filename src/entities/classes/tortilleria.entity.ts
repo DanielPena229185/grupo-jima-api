@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinTable, ManyToMan
 import { Pedido } from './pedido.entity'
 import { Empleado } from "./empleado.entity"
 
-@Entity()
+@Entity({ name: "tortillerias", schema: "public" })
 export class Tortilleria {
     @PrimaryGeneratedColumn()
     id: number
@@ -16,9 +16,6 @@ export class Tortilleria {
     @Column()
     direccion: string
 
-    @OneToMany(() => Pedido, pedido => pedido.tortilleria)
-    pedidos: Pedido[];
-
-    @ManyToMany(() => Empleado, empleados => empleados.tortillerias)
+    @ManyToMany(() => Empleado,(empleado)=> empleado.tortillerias)
     empleados: Empleado[];
 }

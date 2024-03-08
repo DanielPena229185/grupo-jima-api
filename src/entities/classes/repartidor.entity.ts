@@ -1,9 +1,8 @@
-import { Entity, OneToMany} from "typeorm"
+import { ChildEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm"
 import { Empleado } from './empleado.entity'
 import { Pedido } from './pedido.entity'
+import { Usuario } from "./usuario-entity";
 
-@Entity()
-export class Repartidor extends Empleado {
-    @OneToMany(() => Pedido, pedido => pedido.repartidor)
-    pedidos: Pedido[];
+@Entity({ name: "repartidores", schema: "public" })
+export class Repartidor extends Usuario {
 }
