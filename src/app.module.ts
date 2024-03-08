@@ -21,7 +21,7 @@ import { ProductoService } from './producto/producto.service';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, PedidoController, ProductoController, ProductoService],
-  providers: [AppService, PedidoService],
+  controllers: [AppController, PedidoController, ProductoController],
+  providers: [AppService, PedidoService, ProductoService],
 })
 export class AppModule { }
