@@ -1,15 +1,15 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Column, PrimaryGeneratedColumn } from 'typeorm';
 
 export abstract class Usuario {
-    @PrimaryGeneratedColumn()
-      id: string;
+  @PrimaryGeneratedColumn()
+  id: string;
 
-      @Column({unique: true})
-      codigoEmpleado: number
-  
-      @Column({unique: true})
-      telefono: number
-  
-      @Column()
-      nombre: string
+  @Column({ unique: true })
+  codigoEmpleado: number;
+
+  @Column({ unique: true })
+  telefono: number;
+
+  @Column()
+  nombre: string;
 }

@@ -11,17 +11,19 @@ import { Tortilleria } from './classes/tortilleria.entity';
 import { Usuario } from './classes/usuario-entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([
-        Usuario,
-        Empleado,
-        Gramaje,
-        Paquete,
-        Pedido,
-        Producto,
-        Repartidor,
-        Tienda,
-        Tortilleria
-    ])],
-    exports: [TypeOrmModule],
+  imports: [
+    TypeOrmModule.forFeature([
+      Usuario,
+      Empleado,
+      Gramaje,
+      Paquete,
+      Pedido,
+      Producto,
+      Repartidor,
+      Tienda,
+      Tortilleria,
+    ]),
+  ],
+  exports: [TypeOrmModule],
 })
 export class EntitiesModule {}

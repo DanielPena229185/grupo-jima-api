@@ -1,11 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm"
-import { Producto } from './producto.entity';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: "gramajes", schema: "public" })
+@Entity({ name: 'gramajes', schema: 'public' })
 export class Gramaje {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({type:'float'})
-    gramaje: number
+  @Column({ type: 'float' })
+  gramaje: number;
 }

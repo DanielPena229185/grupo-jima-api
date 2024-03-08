@@ -21,4 +21,4 @@ import { EntitiesModule } from './entities/entities.module';
   controllers: [AppController, PedidoController, ProductoController],
   providers: [AppService, PedidoService, ProductoService],
 })
-export class AppModule { }
+export class AppModule {}
