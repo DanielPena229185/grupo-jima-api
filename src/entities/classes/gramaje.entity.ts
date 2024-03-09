@@ -2,9 +2,9 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'gramajes', schema: 'public' })
 export class Gramaje {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ type: 'float' })
+  @Column({ name: 'gramaje', type: 'float' })
   gramaje: number;
 }

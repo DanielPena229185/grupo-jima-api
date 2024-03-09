@@ -21,20 +21,19 @@ export class Pedido {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column({ name: 'codigo_rastreo', unique: true })
   codigoRastreo: number;
 
-  @Column()
+  @Column({ name: 'numero_recorrido', nullable: false })
   numeroRecorrido: number;
 
-  @Column()
+  @Column({ name: 'detalles', nullable: true })
   detalles: string;
 
   @Column({
     type: 'enum',
     nullable: false,
     enum: PedidoStatus,
-    default: PedidoStatus.PENDIENTE,
   })
   estado: PedidoStatus;
 
@@ -52,11 +51,11 @@ export class Pedido {
   })
   fechaHoraActualizado: Date;
 
-  @Column({ type: 'float' })
+  @Column({ name: 'total', type: 'float', nullable: false })
   total: number;
 
   @OneToMany(() => Paquete, (paquete) => paquete.pedido, {
-    cascade: ['remove'],
+    cascade: ['remove', 'update'],
   })
   paquetes: Paquete[];
 
@@ -76,12 +75,14 @@ export class Pedido {
   private beforeInsert(): void {
     this.fechaHoraCreacion = new Date();
     this.fechaHoraActualizado = this.fechaHoraCreacion;
+    this.estado = PedidoStatus.PENDIENTE;
     this.calculateTotal();
   }
 
   @BeforeUpdate()
   private beforeUpdate(): void {
     this.fechaHoraActualizado = new Date();
+    this.calculateTotal();
   }
 
   private calculateTotal() {

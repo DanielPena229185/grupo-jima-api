@@ -4,21 +4,23 @@ import { Producto } from './producto.entity';
 
 @Entity({ name: 'tiendas', schema: 'public' })
 export class Tienda {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ unique: true })
+  @Column({ name: 'telefono', unique: true, nullable: false })
   telefono: number;
 
-  @Column()
+  @Column({ name: 'nombre', nullable: false })
   nombre: string;
 
-  @Column()
+  @Column({ name: 'direccion', nullable: false })
   direccion: string;
 
   @OneToMany(() => Pedido, (pedido) => pedido.tienda)
   pedidos: Pedido[];
 
-  @OneToMany(() => Producto, (producto) => producto.tienda)
+  @OneToMany(() => Producto, (producto) => producto.tienda, {
+    cascade: ['remove']
+  })
   productos: Producto[];
 }

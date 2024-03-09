@@ -4,10 +4,10 @@ import { Tienda } from './tienda.entity';
 
 @Entity({ name: 'productos', schema: 'public' })
 export class Producto {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
-  @Column({ type: 'float' })
+  @Column({ name: 'precio', type: 'float', nullable: false })
   precio: number;
 
   @ManyToOne(() => Gramaje)

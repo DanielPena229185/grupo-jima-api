@@ -10,7 +10,7 @@ import { Producto } from './producto.entity';
 
 @Entity({ name: 'paquetes', schema: 'public' })
 export class Paquete {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: number;
 
   @ManyToOne(() => Pedido, (pedido) => pedido.paquetes)
@@ -21,6 +21,6 @@ export class Paquete {
   @JoinColumn({ name: 'producto_id' })
   producto: Producto;
 
-  @Column()
+  @Column({ name: 'cantidad', nullable: false })
   cantidad: number;
 }
