@@ -5,12 +5,12 @@ import { ObtenerProductosByTiendaId } from './input-dtos/get-productos-by-tienda
 
 @Controller('producto')
 export class ProductoController {
-    constructor(
-        private readonly productoService: ProductoService
-    ){}
+  constructor(private readonly productoService: ProductoService) {}
 
-    @Get('tienda/:tiendaId')
-    async getProductosByTiendaId(@Param() tiendaId: ObtenerProductosByTiendaId): Promise<Producto[]> {
-        return this.productoService.getProductosByTiendaId(tiendaId);
-    }
+  @Get('tienda/:tiendaId')
+  async getProductosByTiendaId(
+    @Param() tiendaId: ObtenerProductosByTiendaId,
+  ): Promise<Producto[]> {
+    return this.productoService.getProductosByTiendaId(tiendaId);
+  }
 }

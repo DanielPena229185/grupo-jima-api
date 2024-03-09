@@ -8,15 +8,12 @@ import { PedidoController } from './pedido/pedido.controller';
 import { PedidoService } from './pedido/pedido.service';
 import { ProductoController } from './producto/producto.controller';
 import { ProductoService } from './producto/producto.service';
+import { EntitiesModule } from './entities/entities.module';
 
-@Module({
-  imports: [
-
-  ],
-})
 @Module({
   imports: [
     TypeOrmModule.forRoot(TypeOrmOptions),
+    EntitiesModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -24,4 +21,4 @@ import { ProductoService } from './producto/producto.service';
   controllers: [AppController, PedidoController, ProductoController],
   providers: [AppService, PedidoService, ProductoService],
 })
-export class AppModule { }
+export class AppModule {}

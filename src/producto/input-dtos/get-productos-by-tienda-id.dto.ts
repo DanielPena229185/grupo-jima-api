@@ -1,6 +1,6 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
 
-export class ObtenerProductosByTiendaId{
-    @IsString()
-    tiendaId: string;
+export class ObtenerProductosByTiendaId {
+  @IsString()
+  tiendaId: string;
 }

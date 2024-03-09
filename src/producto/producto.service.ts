@@ -4,11 +4,12 @@ import { ObtenerProductosByTiendaId } from './input-dtos/get-productos-by-tienda
 
 @Injectable()
 export class ProductoService {
+  constructor() {}
 
-    constructor(){}
-
-    async getProductosByTiendaId(tiendaId: ObtenerProductosByTiendaId): Promise<Producto[]>{
-        console.log(tiendaId.tiendaId)
-        return;
-    }
+  async getProductosByTiendaId(
+    tiendaId: ObtenerProductosByTiendaId,
+  ): Promise<Producto[]> {
+    console.log(tiendaId.tiendaId);
+    return;
+  }
 }
