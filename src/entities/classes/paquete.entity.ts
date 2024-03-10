@@ -11,7 +11,7 @@ import { Producto } from './producto.entity';
 @Entity({ name: 'paquetes', schema: 'public' })
 export class Paquete {
   @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  id: string;
 
   @ManyToOne(() => Pedido, (pedido) => pedido.paquetes)
   @JoinColumn({ name: 'pedido_id' })

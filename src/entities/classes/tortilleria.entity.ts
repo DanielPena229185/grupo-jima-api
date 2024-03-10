@@ -4,10 +4,10 @@ import { Empleado } from './empleado.entity';
 @Entity({ name: 'tortillerias', schema: 'public' })
 export class Tortilleria {
   @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  id: string;
 
   @Column({ name: 'telefono', unique: true, nullable: false })
-  telefono: number;
+  telefono: string;
 
   @Column({ name: 'nombre', nullable: false })
   nombre: string;

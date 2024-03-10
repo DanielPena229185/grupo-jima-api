@@ -5,7 +5,7 @@ import { Tienda } from './tienda.entity';
 @Entity({ name: 'productos', schema: 'public' })
 export class Producto {
   @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  id: string;
 
   @Column({ name: 'precio', type: 'float', nullable: false })
   precio: number;
