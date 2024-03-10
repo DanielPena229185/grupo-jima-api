@@ -8,12 +8,10 @@ import { Producto } from './classes/producto.entity';
 import { Repartidor } from './classes/repartidor.entity';
 import { Tienda } from './classes/tienda.entity';
 import { Tortilleria } from './classes/tortilleria.entity';
-import { Usuario } from './classes/usuario-entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Usuario,
       Empleado,
       Gramaje,
       Paquete,
