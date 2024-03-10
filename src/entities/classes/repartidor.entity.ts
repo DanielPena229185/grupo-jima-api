@@ -1,5 +1,6 @@
-import { Entity } from 'typeorm';
-import { Usuario } from './usuario-entity';
+import { ChildEntity, Entity } from 'typeorm';
+import { Empleado } from './empleado.entity';
+import { UsuarioRol } from '../enums/usuario-roles-enum';
 
-@Entity({ name: 'repartidores', schema: 'public' })
-export class Repartidor extends Usuario {}
+@ChildEntity(UsuarioRol.REPARTIDOR)
+export class Repartidor extends Empleado {}
