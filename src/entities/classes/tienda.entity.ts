@@ -5,10 +5,10 @@ import { Producto } from './producto.entity';
 @Entity({ name: 'tiendas', schema: 'public' })
 export class Tienda {
   @PrimaryGeneratedColumn({ name: 'id' })
-  id: number;
+  id: string;
 
   @Column({ name: 'telefono', unique: true, nullable: false })
-  telefono: number;
+  telefono: string;
 
   @Column({ name: 'nombre', nullable: false })
   nombre: string;
