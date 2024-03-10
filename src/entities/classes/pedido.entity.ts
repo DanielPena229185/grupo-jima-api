@@ -55,7 +55,7 @@ export class Pedido {
   total: number;
 
   @OneToMany(() => Paquete, (paquete) => paquete.pedido, {
-    cascade: ['remove', 'update'],
+    cascade: ['insert', 'remove', 'update'],
   })
   paquetes: Paquete[];
 
