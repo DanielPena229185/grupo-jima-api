@@ -18,8 +18,8 @@ import { PedidoStatus } from '../enums/pedido-status-enum';
 
 @Entity({ name: 'pedidos', schema: 'public' })
 export class Pedido {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id: string;
 
   @Column({ name: 'codigo_rastreo', unique: true })
   codigoRastreo: number;

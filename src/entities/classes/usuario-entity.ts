@@ -8,7 +8,7 @@ export abstract class Usuario {
   codigoEmpleado: number;
 
   @Column({ name: 'telefono', unique: true, nullable: false })
-  telefono: number;
+  telefono: string;
 
   @Column({ name: 'nombres', nullable: false })
   nombres: string;
