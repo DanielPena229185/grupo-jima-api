@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { Pedido } from './pedido.entity';
 import { PedidoService } from './pedido.service';
 import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { ObtenerPedidosByTiendaId } from './input-dtos/obtener-pedidos-por-tienda-id-dto';
 import { ObtenerPedidoById } from './input-dtos/obtener-pedido-by-id-dto';
+import { Pedido } from 'src/entities/classes/pedido.entity';
 
 @Controller('pedido')
 export class PedidoController {
@@ -24,6 +24,6 @@ export class PedidoController {
 
   @Post()
   async postPedido(@Body() body: CrearPedidoDTO): Promise<Pedido> {
-    return this.pedidoService.crearPedido(body);
+    return await this.pedidoService.crearPedido(body);
   }
 }
