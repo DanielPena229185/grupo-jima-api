@@ -13,7 +13,7 @@ export class Empleado {
   id: string;
 
   @Column({ name: 'codigo_empleado', unique: true, nullable: false })
-  codigoEmpleado: number;
+  codigoEmpleado: string;
 
   @Column({ name: 'telefono', unique: true, nullable: false })
   telefono: string;
