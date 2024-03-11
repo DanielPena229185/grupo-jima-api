@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { Empleado } from './empleado.entity';
+import { Tienda } from './tienda.entity';
 
 @Entity({ name: 'tortillerias', schema: 'public' })
 export class Tortilleria {
@@ -22,4 +23,7 @@ export class Tortilleria {
     inverseJoinColumn: { name: 'empleado_id' }, 
   })
   empleados: Empleado[];
+
+  @OneToMany(()=>Tienda, (tienda) => tienda.tortilleria)
+  tiendas: Tienda[];
 }

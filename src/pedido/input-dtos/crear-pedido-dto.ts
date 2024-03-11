@@ -1,5 +1,4 @@
 import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
-import { Paquete } from 'src/entities/classes/paquete.entity';
 
 export class CrearPedidoDTO {
   @IsString()
@@ -8,9 +7,25 @@ export class CrearPedidoDTO {
   detalles: string;
 
   @IsNotEmpty()
-  paquetes: Paquete[];
+  paquetes: PaqueteDTO[];
 
   @IsString()
   @IsNotEmpty()
   tiendaId: string;
+}
+
+class PaqueteDTO{
+  producto: ProductoDTO;
+  cantidad: number;
+}
+
+class ProductoDTO{
+  id: string;
+  precio: number;
+  gramaje: GramajeDTO;
+}
+
+class GramajeDTO{
+  id: string;
+  gramaje: number;
 }

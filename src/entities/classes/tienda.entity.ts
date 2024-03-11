@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { Pedido } from './pedido.entity';
 import { Producto } from './producto.entity';
+import { Repartidor } from './repartidor.entity';
+import { Tortilleria } from './tortilleria.entity';
 
 @Entity({ name: 'tiendas', schema: 'public' })
 export class Tienda {
@@ -23,4 +25,12 @@ export class Tienda {
     cascade: ['remove']
   })
   productos: Producto[];
+
+  @ManyToOne(()=>Repartidor,(repartidor)=> repartidor.tiendas)
+  @JoinColumn({ name: 'repartidor_id' })
+  repartidor:Repartidor;
+
+  @ManyToOne(()=>Tortilleria,(tortilleria)=> tortilleria.tiendas)
+  @JoinColumn({ name: 'tortilleria_id' })
+  tortilleria:Tortilleria;
 }
