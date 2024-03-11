@@ -9,6 +9,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeUpdate,
+  Index,
 } from 'typeorm';
 import { Paquete } from './paquete.entity';
 import { Tienda } from './tienda.entity';
@@ -21,8 +22,14 @@ export class Pedido {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
-  @Column({ name: 'codigo_rastreo', unique: true })
-  codigoRastreo: number;
+  @Column({
+    name: 'codigo_rastreo',
+    length: 8,
+    nullable: false,
+    //default: ()=> "unique_random(8,'pedidos','codigo_rastreo')"
+  })
+  @Index({ unique: true })
+  codigoRastreo: string;
 
   @Column({ name: 'numero_recorrido', nullable: false })
   numeroRecorrido: number;
@@ -86,6 +93,7 @@ export class Pedido {
   }
 
   private calculateTotal() {
+    this.total = 0;
     for (const paquete of this.paquetes) {
       this.total += paquete.cantidad * paquete.producto.precio;
     }

@@ -1,9 +1,31 @@
-import { Producto } from '../pedido.entity';
+import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CrearPedidoDTO {
-  public productos: Producto[];
+  @IsString()
+  @MaxLength(200)
+  @IsOptional()
+  detalles: string;
 
-  constructor(productos: Producto[]) {
-    this.productos = productos;
-  }
+  @IsNotEmpty()
+  paquetes: PaqueteDTO[];
+
+  @IsString()
+  @IsNotEmpty()
+  tiendaId: string;
+}
+
+class PaqueteDTO {
+  producto: ProductoDTO;
+  cantidad: number;
+}
+
+class ProductoDTO {
+  id: string;
+  precio: number;
+  gramaje: GramajeDTO;
+}
+
+class GramajeDTO {
+  id: string;
+  gramaje: number;
 }
