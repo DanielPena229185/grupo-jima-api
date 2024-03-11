@@ -5,7 +5,7 @@ export const TypeOrmOptions: TypeOrmModuleOptions = {
   host: 'localhost',
   port: 3306,
   username: 'root',
-  password: process.env.DB_PASSWORD || '1234',
+  password: process.env.DB_PASSWORD || 'bone770115',
   database: 'grupojima',
   autoLoadEntities: true,
   //synchronize: true //Solo quitar comentario si quieren reiniciar la base de datos

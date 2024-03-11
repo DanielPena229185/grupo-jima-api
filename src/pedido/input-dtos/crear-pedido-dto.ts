@@ -14,18 +14,18 @@ export class CrearPedidoDTO {
   tiendaId: string;
 }
 
-class PaqueteDTO{
+class PaqueteDTO {
   producto: ProductoDTO;
   cantidad: number;
 }
 
-class ProductoDTO{
+class ProductoDTO {
   id: string;
   precio: number;
   gramaje: GramajeDTO;
 }
 
-class GramajeDTO{
+class GramajeDTO {
   id: string;
   gramaje: number;
 }

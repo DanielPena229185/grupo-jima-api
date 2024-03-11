@@ -22,13 +22,13 @@ export class Pedido {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
-  @Column({ 
-      name: 'codigo_rastreo',
-      length: 8,
-      nullable: false,
-      //default: ()=> "unique_random(8,'pedidos','codigo_rastreo')"
-     })
-  @Index({unique: true})
+  @Column({
+    name: 'codigo_rastreo',
+    length: 8,
+    nullable: false,
+    //default: ()=> "unique_random(8,'pedidos','codigo_rastreo')"
+  })
+  @Index({ unique: true })
   codigoRastreo: string;
 
   @Column({ name: 'numero_recorrido', nullable: false })

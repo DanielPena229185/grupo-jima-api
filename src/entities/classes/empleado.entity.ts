@@ -1,14 +1,22 @@
-import { Entity, ManyToMany, JoinTable, Column, PrimaryGeneratedColumn, TableInheritance } from 'typeorm';
+import {
+  Entity,
+  ManyToMany,
+  JoinTable,
+  Column,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+} from 'typeorm';
 import { Tortilleria } from './tortilleria.entity';
 import { UsuarioRol } from '../enums/usuario-roles-enum';
 
 @Entity({ name: 'empleados', schema: 'public' })
-@TableInheritance({ column: {
-  name: 'tipo',
-  enum: UsuarioRol
-} })
+@TableInheritance({
+  column: {
+    name: 'tipo',
+    enum: UsuarioRol,
+  },
+})
 export class Empleado {
-
   @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
