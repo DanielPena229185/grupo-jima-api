@@ -13,13 +13,13 @@ export class PedidoController {
   async getPedidosPorTienda(
     @Param() tiendaId: ObtenerPedidosByTiendaId,
   ): Promise<Pedido[]> {
-    return this.pedidoService.getPedidosByTiendaId(tiendaId);
+    return this.pedidoService.getPedidosByTiendaId();
   }
 
   // TODO agregar /pedido/:idPedido
   @Get('/:pedidoId')
   async getPedidoPorId(@Param() pedidoId: ObtenerPedidoById): Promise<Pedido> {
-    return this.pedidoService.getPedidoById(pedidoId);
+    return this.pedidoService.getPedidoById();
   }
 
   @Post()
