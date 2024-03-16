@@ -11,17 +11,17 @@ export class ProductoNegocio {
 
     async crearPedido(pedido: CrearPedidoDTO): Promise<Pedido> {
         this.crearPedidoValidaciones(pedido);
-        return this.pedidoService.crearPedido(pedido);
+        return await this.pedidoService.crearPedido(pedido);
     }
 
     private crearPedidoValidaciones(pedido: CrearPedidoDTO) {
-        if (!pedido.tiendaId || pedido.tiendaId.length === 0) {
-            throw new NegocioException('Por favor, selecciona una tienda para atender este pedido.');
+        if (!pedido.tiendaId && pedido.tiendaId.length === 0) {
+            throw new NegocioException('Debe seleccionar una tienda para atender este pedido.');
         }
-        if (!pedido.paquetes || pedido.paquetes.length === 0) {
+        if (!pedido.paquetes && pedido.paquetes.length === 0) {
             throw new NegocioException('Debe haber al menos un paquete en el pedido.');
         }
-        if(pedido.paquetes || pedido.paquetes.length > 0){
+        if(pedido.paquetes && pedido.paquetes.length > 0){
             pedido.paquetes.some(paquete => {
                 if (!paquete.productoId) {
                     throw new NegocioException('Debe seleccionar algún producto para el paquete.');
