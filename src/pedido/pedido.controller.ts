@@ -1,14 +1,13 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { PedidoService } from './pedido.service';
 import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { ObtenerPedidosByTiendaId } from './input-dtos/obtener-pedidos-por-tienda-id-dto';
 import { ObtenerPedidoById } from './input-dtos/obtener-pedido-by-id-dto';
 import { Pedido } from 'src/entities/classes/pedido.entity';
-import { ProductoNegocio } from './producto-negocio';
+import { PedidoNegocio } from './producto-negocio';
 
 @Controller('pedido')
 export class PedidoController {
-  constructor(private readonly productoNegocio: ProductoNegocio) {}
+  constructor(private readonly pedidoNegocio: PedidoNegocio) {}
 
   @Get('/tienda/:tiendaId')
   async getPedidosPorTienda(
@@ -25,6 +24,6 @@ export class PedidoController {
 
   @Post()
   async postPedido(@Body() body: CrearPedidoDTO): Promise<Pedido> {
-    return await this.productoNegocio.crearPedido(body);
+    return await this.pedidoNegocio.crearPedido(body);
   }
 }

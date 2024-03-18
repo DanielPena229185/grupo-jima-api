@@ -5,7 +5,7 @@ import { PedidoService } from "./pedido.service";
 import { NegocioException } from "src/utils/exceptions/negocio-exception";
 
 @Injectable()
-export class ProductoNegocio {
+export class PedidoNegocio {
 
     constructor(private readonly pedidoService: PedidoService) { }
 
