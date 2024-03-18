@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Producto } from './producto.entity';
 import { ObtenerProductosByTiendaId } from './input-dtos/get-productos-by-tienda-id.dto';
+import { Producto } from 'src/entities';
 
 @Injectable()
 export class ProductoService {
