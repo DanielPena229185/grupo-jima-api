@@ -1,29 +1,41 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { ObtenerPedidosByTiendaId } from './input-dtos/obtener-pedidos-por-tienda-id-dto';
 import { ObtenerPedidoById } from './input-dtos/obtener-pedido-by-id-dto';
 import { Pedido } from 'src/entities/classes/pedido.entity';
 import { PedidoNegocio } from './producto-negocio';
+import { PedidoOutputDTO } from './output-dtos/pedido-output-dto';
 
 @Controller('pedido')
 export class PedidoController {
   constructor(private readonly pedidoNegocio: PedidoNegocio) {}
 
-  @Get('/tienda/:tiendaId')
-  async getPedidosPorTienda(
-    @Param() tiendaId: ObtenerPedidosByTiendaId,
-  ): Promise<Pedido[]> {
-    return //this.productoNegocio.getPedidosByTiendaId();
+  @Get('/pendientes')
+  async getAllPedidosPendientes():Promise<Pedido[]>{
+    return await this.pedidoNegocio.getAllPedidosPendientes();
   }
 
-  // TODO agregar /pedido/:idPedido
   @Get('/:pedidoId')
-  async getPedidoPorId(@Param() pedidoId: ObtenerPedidoById): Promise<Pedido> {
-    return //this.productoNegocio.getPedidoById();
+  async getPedidoPorId(@Param() param: ObtenerPedidoById): Promise<Pedido> {
+    return this.pedidoNegocio.getPedidoById(param.pedidoId);
   }
 
   @Post()
   async postPedido(@Body() body: CrearPedidoDTO): Promise<Pedido> {
     return await this.pedidoNegocio.crearPedido(body);
+  }
+
+  @Patch('/:pedidoId/finalizar')
+  async finalizarPedido(
+    @Param() param: ObtenerPedidoById
+  ):Promise<Pedido>{
+    return await this.pedidoNegocio.finalizarPedido(param.pedidoId);
+  }
+
+  @Patch('/:pedidoId/cancelar')
+  async cancelarPedido(
+    @Param() param: ObtenerPedidoById
+  ):Promise<Pedido>{
+    return await this.pedidoNegocio.cancelarPedido(param.pedidoId);
   }
 }

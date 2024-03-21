@@ -3,22 +3,39 @@ import { CrearPedidoDTO } from "./input-dtos/crear-pedido-dto";
 import { Pedido } from "src/entities";
 import { PedidoService } from "./pedido.service";
 import { NegocioException } from "src/utils/exceptions/negocio-exception";
+import { PedidoOutputDTO } from "./output-dtos/pedido-output-dto";
 
 @Injectable()
 export class PedidoNegocio {
 
     constructor(private readonly pedidoService: PedidoService) { }
 
+    async getAllPedidosPendientes():Promise<Pedido[]>{
+        return await this.pedidoService.getAllPedidosPendientes();
+    }
+
+    async getPedidoById(pedidoId:string):Promise<Pedido>{
+        return await this.pedidoService.getPedidoById(pedidoId);
+    }
+
     async crearPedido(pedido: CrearPedidoDTO): Promise<Pedido> {
         this.crearPedidoValidaciones(pedido);
         return await this.pedidoService.crearPedido(pedido);
+    }
+
+    async finalizarPedido(pedidoId:string):Promise<Pedido>{
+        return await this.pedidoService.finalizarPedido(pedidoId);
+    }
+
+    async cancelarPedido(pedidoId:string):Promise<Pedido>{
+        return await this.pedidoService.cancelarPedido(pedidoId);
     }
 
     private crearPedidoValidaciones(pedido: CrearPedidoDTO) {
         if (!pedido.tiendaId && pedido.tiendaId.length === 0) {
             throw new NegocioException('Debe seleccionar una tienda para atender este pedido.');
         }
-        if (!pedido.paquetes && pedido.paquetes.length === 0) {
+        if (!pedido.paquetes || pedido.paquetes.length === 0) {
             throw new NegocioException('Debe haber al menos un paquete en el pedido.');
         }
         if(pedido.paquetes && pedido.paquetes.length > 0){

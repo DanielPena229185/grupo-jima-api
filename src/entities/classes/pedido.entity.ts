@@ -89,7 +89,7 @@ export class Pedido {
   @BeforeUpdate()
   private beforeUpdate(): void {
     this.fechaHoraActualizado = new Date();
-    this.calculateTotal();
+    //this.calculateTotal();
   }
 
   private calculateTotal() {
