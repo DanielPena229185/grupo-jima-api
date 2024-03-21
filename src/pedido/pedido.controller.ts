@@ -3,6 +3,7 @@ import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { ObtenerPedidoById } from './input-dtos/obtener-pedido-by-id-dto';
 import { Pedido } from 'src/entities/classes/pedido.entity';
 import { PedidoNegocio } from './producto-negocio';
+import { PedidoByTortilleria} from './input-dtos/pedido-by-tortilleria-id';
 
 @Controller('pedido')
 export class PedidoController {
@@ -16,6 +17,11 @@ export class PedidoController {
   @Get('/:pedidoId')
   async getPedidoPorId(@Param() param: ObtenerPedidoById): Promise<Pedido> {
     return this.pedidoNegocio.getPedidoById(param.pedidoId);
+  }
+
+  @Get('/:tortilleriaId/:estado')
+  async getPedidoByTortilleriaId(@Param() param:PedidoByTortilleria):Promise<Pedido[]>{
+    return this.pedidoNegocio.getPedidosByTortilleriaId(param.tortilleriaId,param.estado);
   }
 
   @Post()

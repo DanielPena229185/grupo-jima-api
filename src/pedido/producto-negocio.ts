@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
-import { Pedido } from 'src/entities';
+import { Pedido, PedidoStatus } from 'src/entities';
 import { PedidoService } from './pedido.service';
 import { NegocioException } from 'src/utils/exceptions/negocio-exception';
 
@@ -14,6 +14,10 @@ export class PedidoNegocio {
 
   async getPedidoById(pedidoId: string): Promise<Pedido> {
     return await this.pedidoService.getPedidoById(pedidoId);
+  }
+
+  async getPedidosByTortilleriaId(tortilleriaId:string,estado:PedidoStatus):Promise<Pedido[]>{
+    return await this.pedidoService.getPedidosByTortilleriaId(tortilleriaId,estado);
   }
 
   async crearPedido(pedido: CrearPedidoDTO): Promise<Pedido> {

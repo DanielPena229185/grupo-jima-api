@@ -70,6 +70,33 @@ export class PedidoService {
     }
   }
 
+  async getPedidosByTortilleriaId(tortilleriaId:string,estado:PedidoStatus):Promise<Pedido[]>{
+    const tortilleria:Tortilleria = await this.tortilleriaRepository.findOneBy({id:tortilleriaId});
+    if(!tortilleria){
+      throw new NegocioException('No se encontró a la Tortilleria.');
+    }
+    return await this.pedidoRepository.find({
+      where: {
+        tortilleria :{
+          id: tortilleriaId
+        },
+        estado: estado
+      },
+      select: {
+        id: true,
+        codigoRastreo: true,
+        fechaHoraCreacion: true,
+        tortilleria:{
+          id:true
+        }
+      },
+      relations: {
+        tienda: true,
+        tortilleria: true
+      }
+    });
+  }
+
   async finalizarPedido(pedidoId: string): Promise<Pedido> {
     const pedido: Pedido = await this.pedidoRepository.findOneBy({
       id: pedidoId,
