@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CrearPedidoDTO {
   @IsString()
@@ -15,17 +15,10 @@ export class CrearPedidoDTO {
 }
 
 class PaqueteDTO {
-  producto: ProductoDTO;
+  @IsString()
+  @IsNotEmpty()
+  productoId: string;
+  
+  @IsNumber()
   cantidad: number;
-}
-
-class ProductoDTO {
-  id: string;
-  precio: number;
-  gramaje: GramajeDTO;
-}
-
-class GramajeDTO {
-  id: string;
-  gramaje: number;
 }

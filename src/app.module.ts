@@ -9,6 +9,7 @@ import { PedidoService } from './pedido/pedido.service';
 import { ProductoController } from './producto/producto.controller';
 import { ProductoService } from './producto/producto.service';
 import { EntitiesModule } from './entities/entities.module';
+import { PedidoNegocio } from './pedido/producto-negocio';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { EntitiesModule } from './entities/entities.module';
     }),
   ],
   controllers: [AppController, PedidoController, ProductoController],
-  providers: [AppService, PedidoService, ProductoService],
+  providers: [AppService, PedidoService, ProductoService, PedidoNegocio],
 })
 export class AppModule {}

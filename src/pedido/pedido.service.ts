@@ -4,7 +4,7 @@ import { Pedido } from 'src/entities/classes/pedido.entity';
 import { Tienda } from 'src/entities/classes/tienda.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Paquete, Repartidor, Tortilleria } from 'src/entities';
+import { Paquete, Producto, Repartidor, Tortilleria } from 'src/entities';
 
 @Injectable()
 export class PedidoService {
@@ -13,11 +13,11 @@ export class PedidoService {
     private readonly tiendaRepository: Repository<Tienda>,
     @InjectRepository(Pedido)
     private readonly pedidoRepository: Repository<Pedido>,
-    @InjectRepository(Repartidor)
-    private readonly repartidorRepository: Repository<Repartidor>,
     @InjectRepository(Tortilleria)
     private readonly tortilleriaRepository: Repository<Tortilleria>,
-  ) {}
+    @InjectRepository(Producto)
+    private readonly productoRepository: Repository<Producto>,
+  ) { }
 
   async getPedidoById(/*param: ObtenerPedidoById*/): Promise<Pedido> {
     // TODO Obtener de la base de datos
@@ -25,7 +25,7 @@ export class PedidoService {
   }
 
   async getPedidosByTiendaId() //param: ObtenerPedidosByTiendaId,
-  : Promise<Pedido[]> {
+    : Promise<Pedido[]> {
     // TODO Obtener de la base de datos
     return null;
   }
@@ -33,35 +33,41 @@ export class PedidoService {
   async crearPedido(crearPedidoDTO: CrearPedidoDTO): Promise<Pedido> {
     const tienda: Tienda = await this.tiendaRepository.findOne({
       where: {
-        id: crearPedidoDTO.tiendaId,
+        id: crearPedidoDTO.tiendaId
       },
       relations: {
         repartidor: true,
         tortilleria: true,
-      },
+      }
     });
     if (!tienda) {
-      throw new NotFoundException(
-        `No se encontro Tienda con el id : ${crearPedidoDTO.tiendaId}`,
-      );
+      throw new NotFoundException(`No se encontró la tienda con el id ${crearPedidoDTO.tiendaId}`)
     }
-
+    let paquetes: Paquete[] = [];
+    for(let paqueteDTO of crearPedidoDTO.paquetes){
+      let paquete: Paquete = new Paquete();
+      const producto = await this.productoRepository.findOneBy({id : paqueteDTO.productoId});
+      if(!producto){
+        throw new NotFoundException(`No se encontró el producto con el id ${paqueteDTO.productoId}`);
+      }
+      paquete.producto = producto;
+      paquete.cantidad = paqueteDTO.cantidad;
+      paquetes.push(paquete);
+    } 
     let codigoRastreoGenerado;
     do {
       codigoRastreoGenerado = this.generarCodigo(8);
     } while (!this.codigoExiste(codigoRastreoGenerado));
-
-    const pedido = new Pedido();
-    pedido.codigoRastreo = codigoRastreoGenerado;
+    let pedido: Pedido = new Pedido();
     pedido.detalles = crearPedidoDTO.detalles;
     pedido.numeroRecorrido = this.numeroDeRecorrido();
-    pedido.paquetes = crearPedidoDTO.paquetes as Paquete[];
-    pedido.repartidor = tienda.repartidor;
     pedido.tienda = tienda;
+    pedido.repartidor = tienda.repartidor;
     pedido.tortilleria = tienda.tortilleria;
-    const pedidoCreado: Pedido = await this.pedidoRepository.save(pedido);
-    pedidoCreado.id;
-    return pedidoCreado;
+    pedido.paquetes = paquetes;
+    pedido.codigoRastreo = codigoRastreoGenerado;
+    const pedidoGuardado: Pedido = await this.pedidoRepository.save(pedido);
+    return pedidoGuardado;
   }
 
   private numeroDeRecorrido(): number {
