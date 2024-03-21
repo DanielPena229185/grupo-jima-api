@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsString, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CrearPedidoDTO {
   @IsString()
@@ -18,7 +24,7 @@ class PaqueteDTO {
   @IsString()
   @IsNotEmpty()
   productoId: string;
-  
+
   @IsNumber()
   cantidad: number;
 }
