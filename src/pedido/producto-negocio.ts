@@ -34,7 +34,7 @@ export class PedidoNegocio {
   }
 
   private crearPedidoValidaciones(pedido: CrearPedidoDTO) {
-    if (!pedido.tiendaId && pedido.tiendaId.length === 0) {
+    if (!pedido.tiendaTelefono && pedido.tiendaTelefono.length === 0) {
       throw new NegocioException(
         'Debe seleccionar una tienda para atender este pedido.',
       );

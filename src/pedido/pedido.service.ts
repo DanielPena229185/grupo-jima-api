@@ -128,7 +128,7 @@ export class PedidoService {
   async crearPedido(crearPedidoDTO: CrearPedidoDTO): Promise<Pedido> {
     const tienda: Tienda = await this.tiendaRepository.findOne({
       where: {
-        id: crearPedidoDTO.tiendaId,
+        telefono: crearPedidoDTO.tiendaTelefono
       },
       relations: {
         repartidor: true,
@@ -137,7 +137,7 @@ export class PedidoService {
     });
     if (!tienda) {
       throw new NotFoundException(
-        `No se encontró la tienda con el id ${crearPedidoDTO.tiendaId}`,
+        `No se encontró la tienda con el siguiente telefono ${crearPedidoDTO.tiendaTelefono}`,
       );
     }
     const paquetes: Paquete[] = [];

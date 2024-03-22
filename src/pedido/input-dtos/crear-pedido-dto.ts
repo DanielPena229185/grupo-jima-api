@@ -17,7 +17,7 @@ export class CrearPedidoDTO {
 
   @IsString()
   @IsNotEmpty()
-  tiendaId: string;
+  tiendaTelefono: string;
 }
 
 class PaqueteDTO {
