@@ -7,10 +7,10 @@ import { Producto } from 'src/entities';
 export class ProductoController {
   constructor(private readonly productoService: ProductoService) {}
 
-  @Get('tienda/:tiendaId')
-  async getProductosByTiendaId(
-    @Param() tiendaId: ObtenerProductosByTiendaId,
+  @Get('/tienda/:tiendaTelefono')
+  async getProductosByTiendaTelefono(
+    @Param() param: ObtenerProductosByTiendaId,
   ): Promise<Producto[]> {
-    return this.productoService.getProductosByTiendaId(tiendaId);
+    return this.productoService.getProductosByTiendaTelefono(param);
   }
 }
