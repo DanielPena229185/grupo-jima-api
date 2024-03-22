@@ -8,8 +8,8 @@ import { NegocioException } from 'src/utils/exceptions/negocio-exception';
 export class PedidoNegocio {
   constructor(private readonly pedidoService: PedidoService) {}
 
-  async getAllPedidosPendientes(): Promise<Pedido[]> {
-    return await this.pedidoService.getAllPedidosPendientes();
+  async getAllPedidosPendientesByTortilleriaId(tortilleriaId: string): Promise<Pedido[]> {
+    return await this.pedidoService.getAllPedidosPendientesByTortilleriaId(tortilleriaId);
   }
 
   async getPedidoById(pedidoId: string): Promise<Pedido> {

@@ -20,9 +20,12 @@ export class PedidoService {
     private readonly productoRepository: Repository<Producto>,
   ) {}
 
-  async getAllPedidosPendientes(): Promise<Pedido[]> {
+  async getAllPedidosPendientesByTortilleriaId(tortilleriaId: string): Promise<Pedido[]> {
     return this.pedidoRepository.find({
       where: {
+        tortilleria: {
+          id: tortilleriaId
+        },
         estado: PedidoStatus.PENDIENTE,
       },
       select: {

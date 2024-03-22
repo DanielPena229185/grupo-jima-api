@@ -9,9 +9,11 @@ import { PedidoByTortilleria} from './input-dtos/pedido-by-tortilleria-id';
 export class PedidoController {
   constructor(private readonly pedidoNegocio: PedidoNegocio) {}
 
-  @Get('/pendientes')
-  async getAllPedidosPendientes(): Promise<Pedido[]> {
-    return await this.pedidoNegocio.getAllPedidosPendientes();
+  @Get('/pendientes/tienda/:tortilleriaId')
+  async getAllPedidosPendientesByTortilleriaId(
+    @Param('tortilleriaId') tortilleriaId: string
+  ): Promise<Pedido[]> {
+    return await this.pedidoNegocio.getAllPedidosPendientesByTortilleriaId(tortilleriaId);
   }
 
   @Get('/:pedidoId')
