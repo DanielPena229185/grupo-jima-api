@@ -11,6 +11,8 @@ import { ProductoService } from './producto/producto.service';
 import { EntitiesModule } from './entities/entities.module';
 import { PedidoNegocio } from './pedido/producto-negocio';
 import { GramajeController } from './gramaje/gramaje.controller';
+import { TiendaController } from './tienda/tienda.controller';
+import { TiendaService } from './tienda/tienda.service';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { GramajeController } from './gramaje/gramaje.controller';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, PedidoController, ProductoController, GramajeController],
-  providers: [AppService, PedidoService, ProductoService, PedidoNegocio],
+  controllers: [AppController, PedidoController, ProductoController, GramajeController, TiendaController],
+  providers: [AppService, PedidoService, ProductoService, PedidoNegocio, TiendaService],
 })
 export class AppModule {}
