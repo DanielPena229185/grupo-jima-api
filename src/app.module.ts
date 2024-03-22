@@ -10,6 +10,7 @@ import { ProductoController } from './producto/producto.controller';
 import { ProductoService } from './producto/producto.service';
 import { EntitiesModule } from './entities/entities.module';
 import { PedidoNegocio } from './pedido/producto-negocio';
+import { GramajeController } from './gramaje/gramaje.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { PedidoNegocio } from './pedido/producto-negocio';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController, PedidoController, ProductoController],
+  controllers: [AppController, PedidoController, ProductoController, GramajeController],
   providers: [AppService, PedidoService, ProductoService, PedidoNegocio],
 })
 export class AppModule {}
