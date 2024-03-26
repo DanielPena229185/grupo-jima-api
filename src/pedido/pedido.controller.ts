@@ -3,18 +3,13 @@ import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { ObtenerPedidoById } from './input-dtos/obtener-pedido-by-id-dto';
 import { Pedido } from 'src/entities/classes/pedido.entity';
 import { PedidoNegocio } from './producto-negocio';
-import { PedidoByTortilleria} from './input-dtos/pedido-by-tortilleria-id';
+import { PedidoByTortilleria } from './input-dtos/pedido-by-tortilleria-id';
+import { ObtenerPedidosByTortilleriaIdDecorator } from './decorators/obtener-pedidos-by-tortilleria-id.decorator';
+import { ObtenerPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
 
 @Controller('pedido')
 export class PedidoController {
-  constructor(private readonly pedidoNegocio: PedidoNegocio) {}
-
-  @Get('/pendientes/tienda/:tortilleriaId')
-  async getAllPedidosPendientesByTortilleriaId(
-    @Param('tortilleriaId') tortilleriaId: string
-  ): Promise<Pedido[]> {
-    return await this.pedidoNegocio.getAllPedidosPendientesByTortilleriaId(tortilleriaId);
-  }
+  constructor(private readonly pedidoNegocio: PedidoNegocio) { }
 
   @Get('/:pedidoId')
   async getPedidoPorId(@Param() param: ObtenerPedidoById): Promise<Pedido> {
@@ -22,8 +17,10 @@ export class PedidoController {
   }
 
   @Get('/:tortilleriaId/:estado')
-  async getPedidoByTortilleriaId(@Param() param:PedidoByTortilleria):Promise<Pedido[]>{
-    return this.pedidoNegocio.getPedidosByTortilleriaId(param.tortilleriaId,param.estado);
+  async getPedidoByTortilleriaIdAndEstado(
+    @ObtenerPedidosByTortilleriaIdDecorator() query: ObtenerPedidosByTortilleriaIdQueryDTO,
+    @Param() param: PedidoByTortilleria): Promise<Pedido[]> {
+    return this.pedidoNegocio.getPedidoByTortilleriaIdAndEstado(query, param);
   }
 
   @Post()

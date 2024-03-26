@@ -3,9 +3,11 @@ import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { Pedido } from 'src/entities/classes/pedido.entity';
 import { Tienda } from 'src/entities/classes/tienda.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { Paquete, PedidoStatus, Producto, Tortilleria } from 'src/entities';
 import { NegocioException } from 'src/utils/exceptions/negocio-exception';
+import { PedidoByTortilleria } from './input-dtos/pedido-by-tortilleria-id';
+import { ObtenerPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
 
 @Injectable()
 export class PedidoService {
@@ -18,7 +20,7 @@ export class PedidoService {
     private readonly tortilleriaRepository: Repository<Tortilleria>,
     @InjectRepository(Producto)
     private readonly productoRepository: Repository<Producto>,
-  ) {}
+  ) { }
 
   async getAllPedidosPendientesByTortilleriaId(tortilleriaId: string): Promise<Pedido[]> {
     return this.pedidoRepository.find({
@@ -73,31 +75,47 @@ export class PedidoService {
     }
   }
 
-  async getPedidosByTortilleriaId(tortilleriaId:string,estado:PedidoStatus):Promise<Pedido[]>{
-    const tortilleria:Tortilleria = await this.tortilleriaRepository.findOneBy({id:tortilleriaId});
-    if(!tortilleria){
+  async getPedidoByTortilleriaIdAndEstado(query: ObtenerPedidosByTortilleriaIdQueryDTO, parametros: PedidoByTortilleria): Promise<Pedido[]> {
+    const tortilleria: Tortilleria = await this.tortilleriaRepository.findOneBy({ id: parametros.tortilleriaId });
+    if (!tortilleria) {
       throw new NegocioException('No se encontró a la Tortilleria.');
     }
-    return await this.pedidoRepository.find({
-      where: {
-        tortilleria :{
-          id: tortilleriaId
-        },
-        estado: estado
+    const filtroExclusivo: FindOptionsWhere<Pedido> = {
+      tortilleria: {
+        id: parametros.tortilleriaId
       },
-      select: {
-        id: true,
-        codigoRastreo: true,
-        fechaHoraCreacion: true,
-        tortilleria:{
-          id:true
+      estado: parametros.estado
+    }
+    const opcionesWhere: FindOptionsWhere<Pedido>[] = [];
+    if (query.codigoRastreo) {
+      opcionesWhere.push({
+        codigoRastreo: Like(`%${query.codigoRastreo}%`),
+      })
+    }
+    if (query.detalles) {
+      opcionesWhere.push({
+        detalles: Like(`%${query.detalles}%`),
+      })
+    }
+    if (query.nombreTienda) {
+      opcionesWhere.push({
+        tienda: {
+          nombre: Like(`%${query.nombreTienda}%`)
         }
-      },
-      relations: {
-        tienda: true,
-        tortilleria: true
-      }
+      })
+    }
+    const whereOptionsConFiltro: FindOptionsWhere<Pedido>[] = opcionesWhere.map(opcion => {
+      return {
+        ...opcion,
+        ...filtroExclusivo
+      };
     });
+    const pedidos: Pedido[] = await this.pedidoRepository.find({
+      where: whereOptionsConFiltro,
+      select: query.campos,
+      relations: query.relaciones
+    });
+    return pedidos;
   }
 
   async finalizarPedido(pedidoId: string): Promise<Pedido> {

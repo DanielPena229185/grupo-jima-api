@@ -3,6 +3,8 @@ import { CrearPedidoDTO } from './input-dtos/crear-pedido-dto';
 import { Pedido, PedidoStatus } from 'src/entities';
 import { PedidoService } from './pedido.service';
 import { NegocioException } from 'src/utils/exceptions/negocio-exception';
+import { PedidoByTortilleria } from './input-dtos/pedido-by-tortilleria-id';
+import { ObtenerPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
 
 @Injectable()
 export class PedidoNegocio {
@@ -16,8 +18,8 @@ export class PedidoNegocio {
     return await this.pedidoService.getPedidoById(pedidoId);
   }
 
-  async getPedidosByTortilleriaId(tortilleriaId:string,estado:PedidoStatus):Promise<Pedido[]>{
-    return await this.pedidoService.getPedidosByTortilleriaId(tortilleriaId,estado);
+  async getPedidoByTortilleriaIdAndEstado(query: ObtenerPedidosByTortilleriaIdQueryDTO, parametros: PedidoByTortilleria):Promise<Pedido[]>{
+    return await this.pedidoService.getPedidoByTortilleriaIdAndEstado(query, parametros);
   }
 
   async crearPedido(pedido: CrearPedidoDTO): Promise<Pedido> {
