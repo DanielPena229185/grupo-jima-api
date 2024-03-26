@@ -8,5 +8,5 @@ export const TypeOrmOptions: TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD || '1234',
   database: 'grupojima',
   autoLoadEntities: true,
-  //synchronize: true //Solo quitar comentario si quieren reiniciar la base de datos
+  synchronize: true //Solo quitar comentario si quieren reiniciar la base de datos
 };

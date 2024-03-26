@@ -1,6 +1,7 @@
+--Todos los gramajes son gramos
 INSERT INTO
     gramajes (id, gramaje)
 VALUES
-    ('1', 0.5),
-    ('2', 1.0),
-    ('3', 2.0);
+    ('1', 500),
+    ('2', 1500),
+    ('3', 2300);
