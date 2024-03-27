@@ -87,12 +87,15 @@ export class PedidoService {
         }
       })
     }
-    const whereOptionsConFiltro: FindOptionsWhere<Pedido>[] = opcionesWhere.map(opcion => {
+    let whereOptionsConFiltro: FindOptionsWhere<Pedido>[] = opcionesWhere.map(opcion => {
       return {
         ...opcion,
         ...filtroExclusivo
       };
     });
+    if(whereOptionsConFiltro.length === 0){
+      whereOptionsConFiltro.push(filtroExclusivo);
+    }
     const pedidos: Pedido[] = await this.pedidoRepository.find({
       where: whereOptionsConFiltro,
       select: query.campos,
