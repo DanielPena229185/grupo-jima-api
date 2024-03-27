@@ -5,7 +5,7 @@ import { parseCantidad } from "src/utils/parses/parse-cantidad";
 import { parseOrdenamiento } from "src/utils/parses/parse-ordenamiento";
 import { parsePagina } from "src/utils/parses/parse-pagina";
 import { parseRelacionesQuery } from "src/utils/parses/parse-relaciones-query";
-import { ObtenerPedidosByTortilleriaIdQueryDTO } from "../input-dtos/obtener-pedidos-by-tortilleria-id.dto";
+import { EncontrarPedidosByTortilleriaIdQueryDTO } from "../input-dtos/obtener-pedidos-by-tortilleria-id.dto";
 
 const camposOrdenamiento = ['fechaHoraCreacion'];
 const camposValidosQuery = new Map<string, boolean | object>([
@@ -24,7 +24,7 @@ const camposValidosQuery = new Map<string, boolean | object>([
     ['paquetes', { id: true, cantidad: true, producto: true }]
 ])
 
-const relacionesValidasQuery = ['repartidor', 'tienda', 'tortilleria', 'paqueteria'];
+const relacionesValidasQuery = ['repartidor', 'tienda', 'tortilleria', 'paquetes', 'paquetes.producto', 'paquetes.producto.gramaje'];
 
 export const ObtenerPedidosByTortilleriaIdDecorator = createParamDecorator((data, ctx: ExecutionContext) => {
     const req: Request = ctx.switchToHttp().getRequest();
@@ -36,16 +36,16 @@ export const ObtenerPedidosByTortilleriaIdDecorator = createParamDecorator((data
     const ordenamiento: object = parseOrdenamiento(ordenamientoQuery, camposOrdenamiento);
     const camposQuery: string = req.query['campos'] as string;
     const campos: Object = parseCamposQuery(camposQuery, camposValidosQuery);
-    if(Object.keys(campos).length === 0){
+    if (Object.keys(campos).length === 0) {
         throw new BadRequestException(`Pedidos de tortillerias requiere información de los campos`);
     }
     const relacionesQuery: string = req.query['relaciones'] as string;
-    const relaciones: Object = parseRelacionesQuery(relacionesQuery, relacionesValidasQuery);
+    const relaciones: string[] = parseRelacionesQuery(relacionesQuery, relacionesValidasQuery);
     const codigoRastreo: string = req.query['codigoRastreo'] as string;
     const detalles: string = req.query['detalles'] as string;
     const nombreTienda: string = req.query['nombreTienda'] as string;
-    const query: ObtenerPedidosByTortilleriaIdQueryDTO =
-        new ObtenerPedidosByTortilleriaIdQueryDTO(
+    const query: EncontrarPedidosByTortilleriaIdQueryDTO =
+        new EncontrarPedidosByTortilleriaIdQueryDTO(
             pagina,
             cantidad,
             ordenamiento,

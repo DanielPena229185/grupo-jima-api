@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class ObtenerPedidoById {
+export class PedidoByIdDTO {
   @IsNotEmpty()
   @IsString()
   public pedidoId: string;

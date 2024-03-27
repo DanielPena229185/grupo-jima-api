@@ -4,7 +4,9 @@ import { Pedido, PedidoStatus } from 'src/entities';
 import { PedidoService } from './pedido.service';
 import { NegocioException } from 'src/utils/exceptions/negocio-exception';
 import { PedidoByTortilleria } from './input-dtos/pedido-by-tortilleria-id';
-import { ObtenerPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
+import { EncontrarPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
+import { EncontrarPedidoById } from './input-dtos/obtener-pedido-by-id.dto';
+import { PedidoByIdDTO } from './input-dtos/pedido-by-id.dto';
 
 @Injectable()
 export class PedidoNegocio {
@@ -14,11 +16,11 @@ export class PedidoNegocio {
     return await this.pedidoService.getAllPedidosPendientesByTortilleriaId(tortilleriaId);
   }
 
-  async getPedidoById(pedidoId: string): Promise<Pedido> {
-    return await this.pedidoService.getPedidoById(pedidoId);
+  async getPedidoById(query: EncontrarPedidoById, param: PedidoByIdDTO): Promise<Pedido> {
+    return await this.pedidoService.getPedidoById(query, param);
   }
 
-  async getPedidoByTortilleriaIdAndEstado(query: ObtenerPedidosByTortilleriaIdQueryDTO, parametros: PedidoByTortilleria):Promise<Pedido[]>{
+  async getPedidoByTortilleriaIdAndEstado(query: EncontrarPedidosByTortilleriaIdQueryDTO, parametros: PedidoByTortilleria):Promise<Pedido[]>{
     return await this.pedidoService.getPedidoByTortilleriaIdAndEstado(query, parametros);
   }
 

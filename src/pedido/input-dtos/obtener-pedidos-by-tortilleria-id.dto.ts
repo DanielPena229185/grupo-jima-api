@@ -1,11 +1,11 @@
 import { EncontrarTodoQueryDTO } from "src/utils/input-dto/encontrar-todo-query.dto";
 
-export class ObtenerPedidosByTortilleriaIdQueryDTO extends EncontrarTodoQueryDTO {
+export class EncontrarPedidosByTortilleriaIdQueryDTO extends EncontrarTodoQueryDTO {
     campos: Object;
     codigoRastreo: string;
     detalles: string;
     nombreTienda: string;
-    relaciones: Object;
+    relaciones: string[];
     override pagina: number;
     override cantidad: number;
     override ordenamiento: Object;
@@ -18,7 +18,7 @@ export class ObtenerPedidosByTortilleriaIdQueryDTO extends EncontrarTodoQueryDTO
         codigoRastreo: string,
         detalles: string,
         nombreTienda: string,
-        relaciones: Object) {
+        relaciones: string[]) {
         super(pagina, cantidad, ordenamiento);
         this.campos = campos;
         this.codigoRastreo = codigoRastreo;

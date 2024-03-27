@@ -7,7 +7,9 @@ import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { Paquete, PedidoStatus, Producto, Tortilleria } from 'src/entities';
 import { NegocioException } from 'src/utils/exceptions/negocio-exception';
 import { PedidoByTortilleria } from './input-dtos/pedido-by-tortilleria-id';
-import { ObtenerPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
+import { EncontrarPedidosByTortilleriaIdQueryDTO } from './input-dtos/obtener-pedidos-by-tortilleria-id.dto';
+import { EncontrarPedidoById } from './input-dtos/obtener-pedido-by-id.dto';
+import { PedidoByIdDTO } from './input-dtos/pedido-by-id.dto';
 
 @Injectable()
 export class PedidoService {
@@ -41,32 +43,13 @@ export class PedidoService {
     });
   }
 
-  async getPedidoById(pedidoId: string): Promise<Pedido> {
+  async getPedidoById(query: EncontrarPedidoById, param: PedidoByIdDTO): Promise<Pedido> {
     const pedido: Pedido = await this.pedidoRepository.findOne({
       where: {
-        id: pedidoId,
+        id: param.pedidoId,
       },
-      select: {
-        repartidor: {
-          nombres: true,
-          apellidos: true,
-        },
-        tortilleria: {
-          nombre: true,
-        },
-        tienda: {
-          nombre: true,
-          telefono: true,
-        },
-      },
-      relations: [
-        'repartidor',
-        'tortilleria',
-        'tienda',
-        'paquetes',
-        'paquetes.producto',
-        'paquetes.producto.gramaje',
-      ],
+      select: query.campos,
+      relations: query.relaciones
     });
     if (pedido === null) {
       throw new NegocioException('No se encontró el Pedido solicitado.');
@@ -75,7 +58,7 @@ export class PedidoService {
     }
   }
 
-  async getPedidoByTortilleriaIdAndEstado(query: ObtenerPedidosByTortilleriaIdQueryDTO, parametros: PedidoByTortilleria): Promise<Pedido[]> {
+  async getPedidoByTortilleriaIdAndEstado(query: EncontrarPedidosByTortilleriaIdQueryDTO, parametros: PedidoByTortilleria): Promise<Pedido[]> {
     const tortilleria: Tortilleria = await this.tortilleriaRepository.findOneBy({ id: parametros.tortilleriaId });
     if (!tortilleria) {
       throw new NegocioException('No se encontró a la Tortilleria.');
